@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HB Indie Lab · 게임 아카이브</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; }
+    h1 { margin-bottom: 4px; }
+    .sub { color: #666; margin-top: 0; }
+    #list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; padding: 0; }
+    #list li { list-style: none; border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; }
+    #list li:hover { border-color: #888; }
+    #list h3 { margin: 0 0 4px; }
+    #list p { margin: 0; color: #555; font-size: 14px; }
+    #player { display: none; margin-top: 24px; }
+    #player iframe { width: 100%; aspect-ratio: 4 / 3; border: 1px solid #ccc; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>HB Indie Lab</h1>
+  <p class="sub">AI로 만든 게임 아카이브</p>
+
+  <ul id="list"></ul>
+
+  <section id="player">
+    <h2 id="player-title"></h2>
+    <!-- 게임은 다른 출처(hb-indie-lab-play.pages.dev)에서 실행된다. ADR-002 참고 -->
+    <iframe id="frame"
+            sandbox="allow-scripts allow-same-origin allow-pointer-lock"
+            allow="fullscreen"
+            loading="lazy"
+            title="game"></iframe>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

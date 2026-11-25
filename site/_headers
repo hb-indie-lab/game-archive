@@ -1,0 +1,4 @@
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; frame-src https://hb-indie-lab-play.pages.dev; img-src 'self' https://hb-indie-lab-play.pages.dev
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
