@@ -4,5 +4,11 @@
     "title": "Hello Box",
     "author": "운영진",
     "description": "배포 테스트용 클릭 게임"
+  },
+  {
+    "id": "haksik-stack",
+    "title": "학식 쌓기",
+    "author": "이상현",
+    "description": "반찬을 쌓는 B급 게임. 맵 3종과 숨겨진 칭호"
   }
 ]
