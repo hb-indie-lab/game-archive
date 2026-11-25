@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>HB Indie Lab · 게임 아카이브</title>
   <style>
     body { font-family: system-ui, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; }
@@ -14,7 +14,21 @@
     #list h3 { margin: 0 0 4px; }
     #list p { margin: 0; color: #555; font-size: 14px; }
     #player { display: none; margin-top: 24px; }
-    #player iframe { width: 100%; aspect-ratio: 4 / 3; border: 1px solid #ccc; border-radius: 8px; }
+    #player.open { display: block; }
+    .player-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .player-bar h2 { margin: 0; font-size: 20px; }
+    .player-bar button { font: inherit; font-size: 14px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; white-space: nowrap; }
+    #player iframe { display: block; width: 100%; height: min(80vh, 760px); border: 1px solid #ccc; border-radius: 8px; background: #000; }
+    #btn-close { display: none; }
+
+    /* 전체 화면 모드 (휴대폰에서는 게임을 열면 자동 진입) */
+    #player.full { position: fixed; inset: 0; z-index: 1000; margin: 0; background: #000; display: flex; flex-direction: column; }
+    #player.full .player-bar { margin: 0; padding: calc(env(safe-area-inset-top, 0px) + 6px) 10px 6px; background: #111; color: #fff; }
+    #player.full .player-bar h2 { font-size: 16px; }
+    #player.full iframe { flex: 1; height: auto; border: 0; border-radius: 0; }
+    #player.full #btn-full { display: none; }
+    #player.full #btn-close { display: inline-block; }
+    body.no-scroll { overflow: hidden; }
   </style>
 </head>
 <body>
@@ -24,7 +38,13 @@
   <ul id="list"></ul>
 
   <section id="player">
-    <h2 id="player-title"></h2>
+    <div class="player-bar">
+      <h2 id="player-title"></h2>
+      <span>
+        <button id="btn-full" type="button">전체 화면</button>
+        <button id="btn-close" type="button">✕ 닫기</button>
+      </span>
+    </div>
     <!-- 게임은 다른 출처(hb-indie-lab-play.pages.dev)에서 실행된다. ADR-002 참고 -->
     <iframe id="frame"
             sandbox="allow-scripts allow-same-origin allow-pointer-lock"

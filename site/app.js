@@ -19,12 +19,40 @@ async function main() {
   }
 }
 
+// 화면 폭이 이 이하이면 게임을 열 때 바로 전체 화면으로
+const MOBILE = window.matchMedia("(max-width: 600px)");
+const player = document.getElementById("player");
+const frame = document.getElementById("frame");
+
 function play(game) {
   // id는 영문 소문자, 숫자, 하이픈만 허용 (경로 조작 방지)
   if (!/^[a-z0-9-]+$/.test(game.id)) return;
   document.getElementById("player-title").textContent = game.title;
-  document.getElementById("frame").src = `${GAMES_ORIGIN}/${game.id}/`;
-  document.getElementById("player").style.display = "block";
+  frame.src = `${GAMES_ORIGIN}/${game.id}/`;
+  player.classList.add("open");
+  if (MOBILE.matches) enterFull();
+  else player.scrollIntoView({ behavior: "smooth", block: "start" });
 }
+
+function enterFull() {
+  if (player.classList.contains("full")) return;
+  player.classList.add("full");
+  document.body.classList.add("no-scroll");
+  // 휴대폰 뒤로 가기 버튼으로 전체 화면만 닫히게 기록을 하나 쌓는다
+  history.pushState({ full: true }, "");
+  frame.focus();
+}
+
+function exitFull(fromPopState) {
+  if (!player.classList.contains("full")) return;
+  player.classList.remove("full");
+  document.body.classList.remove("no-scroll");
+  if (!fromPopState) history.back();
+}
+
+document.getElementById("btn-full").addEventListener("click", enterFull);
+document.getElementById("btn-close").addEventListener("click", () => exitFull(false));
+window.addEventListener("popstate", () => exitFull(true));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") exitFull(false); });
 
 main();
